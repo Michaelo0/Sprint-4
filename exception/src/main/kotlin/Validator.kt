@@ -1,5 +1,3 @@
-import javax.xml.stream.events.Characters
-
 abstract class Validator<T> {
     abstract fun validatePhone(value: T?): List<ErrorCode>
     abstract fun validateName(value: T?): List<ErrorCode>
@@ -65,7 +63,4 @@ class PhoneValidator : Validator<String>() {
 
         return listOf()
     }
-}
-
-fun main(){
 }

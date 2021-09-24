@@ -6,7 +6,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
 class ClientServiceTest {
-
+//
     private val gson = Gson()
     private val clientService = ClientService()
 
