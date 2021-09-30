@@ -1,20 +1,13 @@
 package ru.sber.generics
 
-import com.sun.org.apache.xpath.internal.operations.Bool
-import java.util.*
 
 // 1.
-fun compare(p1: Pair<Any, Any>, p2: Pair<Any, Any>): Boolean {
-    val k1 = p1.first
-    val v1 = p1.second
-    val k2 = p2.first
-    val v2 = p2.second
-
-    return ((k1 == k2) && (v1 == v2))
+fun <T1, T2> compare(p1: Pair<T1, T2>, p2: Pair<T1, T2>): Boolean {
+    return ((p1.first == p2.first) && (p1.second == p2.second))
 }
 
 // 2.
-fun <T> countGreaterThan(anArray: Array<Comparable<in T>>, elem: T): Int {
+fun <T : Comparable<T>> countGreaterThan(anArray: Array<T>, elem: T): Int {
     var count = 0
     for (el in anArray){
         if (el > elem)
