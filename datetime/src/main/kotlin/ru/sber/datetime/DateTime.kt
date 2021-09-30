@@ -1,8 +1,6 @@
 package ru.sber.datetime
 
-import java.time.LocalDateTime
-import java.time.YearMonth
-import java.time.ZoneId
+import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -31,11 +29,15 @@ fun getLastInMonthDayWeekList(year: Int): List<String> {
 // 3.
 fun getNumberOfFridayThirteensInYear(year: Int): Int {
     var number = 0
-    val c = Calendar.getInstance()
-    for (i in 1..12){
-        c.set(year, i, 13)
-        if (c.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY)
-            number++
+    for (month in 1..12){
+        val yearMonth = YearMonth.of(year, month)
+        val days = yearMonth.lengthOfMonth()
+        for (day in 1..days) {
+            val date = LocalDate.of(year, month, day)
+            val dayOfWeek = date.dayOfWeek
+            if ((day == 13) && (dayOfWeek == DayOfWeek.FRIDAY))
+                number++
+        }
     }
     return number
 }
