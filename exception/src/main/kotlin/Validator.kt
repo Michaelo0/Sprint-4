@@ -5,9 +5,9 @@ abstract class Validator<T> {
     abstract fun validateSnils(value: T?): List<ErrorCode>
 }
 
-class PhoneValidator : Validator<String>() {
+class ValidatorUtils : Validator<String>() {
     override fun validateName(value: String?): List<ErrorCode> {
-        if (value == null || value.length > 16)
+        if (value.isNullOrEmpty() || value.length > 16)
             return listOf(ErrorCode.INVALID_CHARACTER)
         for (i in value.indices)
                 if (Character.UnicodeBlock.of(value[i]) != Character.UnicodeBlock.CYRILLIC) {
@@ -17,7 +17,7 @@ class PhoneValidator : Validator<String>() {
     }
 
     override fun validatePhone(value: String?): List<ErrorCode> {
-        if (value == null || value.length != 11 || (value[0] != '7' && value[0] != '8'))
+        if (value.isNullOrEmpty() || value.length != 11 || (value[0] != '7' && value[0] != '8'))
             return listOf(ErrorCode.INVALID_CHARACTER)
         for (i in value.indices){
             if (!value[i].isDigit())
@@ -27,18 +27,15 @@ class PhoneValidator : Validator<String>() {
     }
 
     override fun validateEmail(value: String?): List<ErrorCode> {
-        if (value == null || value.length > 32 || !value.contains('@'))
+        if (value.isNullOrEmpty() || value.length > 32)
             return listOf(ErrorCode.INVALID_CHARACTER)
-        for (i in value.indices)
-            if (!((value[i] in 'A'..'Z') || (value[i] in 'a'..'z'))) {
-                if (value[i] != '@' && value[i] != '.')
-                    return listOf(ErrorCode.INVALID_CHARACTER)
-            }
+        if (!value.matches("([A-Za-z]+@[A-Za-z]+\\.[A-Za-z]+)$".toRegex()))
+            return listOf(ErrorCode.INVALID_CHARACTER)
         return listOf()
     }
 
     override fun validateSnils(value: String?): List<ErrorCode> {
-        if (value == null || value.length != 11)
+        if (value.isNullOrEmpty() || value.length != 11)
             return listOf(ErrorCode.INVALID_CHARACTER)
 
         for (i in value.indices) {
